@@ -1,0 +1,20 @@
+global:
+  resolve_timeout: 1h
+
+route:
+  receiver: 'default-receiver'
+  group_wait: 15s
+  group_interval: 15s
+  repeat_interval: 15m
+  group_by: [status, alertname]
+
+receivers:
+  - name: default-receiver
+    slack_configs:
+      - api_url: https://hooks.slack.com/services/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
+        username: 'Sentinel'
+        channel: sentinel-dev
+        send_resolved: true
+        title: '[{{ if eq .Status "firing" }}ALERT{{ else }}{{ .Status | toUpper }}{{ end }}] {{ .CommonAnnotations.slack_title}}'
+        text: '{{ if eq .Status "firing" }}{{ .CommonAnnotations.slack_text_alert }}{{ else }}{{ .CommonAnnotations.slack_text_recovery }}{{ end }}'
+        title_link: '{{ .CommonAnnotations.slack_title_link }}'

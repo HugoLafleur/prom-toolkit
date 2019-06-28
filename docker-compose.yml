@@ -1,0 +1,59 @@
+version: '2'
+
+services:
+  prometheus:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.prometheus
+    image: prometheus:local
+    volumes:
+    - ./prometheus/conf:/etc/prometheus
+    - ./rules:/etc/prometheus/rules
+    - prom-data-volume:/prometheus
+    - ~/.aws:/home/.aws
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    - --storage.tsdb.path=/prometheus
+    - --storage.tsdb.retention=90d
+    - --web.enable-lifecycle
+    ports:
+    - 9090:9090
+    networks:
+    - toolkit
+
+  alertmanager:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.alertmanager
+    image: alertmanager:local
+    volumes:
+    - ./prometheus/conf:/etc/prometheus
+    command:
+    - --config.file=/etc/prometheus/alertmanager.yml
+    ports:
+    - 9093:9093
+    networks:
+    - toolkit
+
+  grafana:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.grafana
+    image: grafana:local
+    volumes:
+    - ./grafana/provisioning/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    - ./grafana/conf/grafana.ini:/etc/grafana/grafana.ini
+    ports:
+    - 3000:3000
+    networks:
+    - toolkit
+
+volumes:
+  prom-data-volume: {}
+
+networks:
+  toolkit:
+    ipam:
+      config:  
+        - subnet: "192.168.150.0/24"
+          gateway: "192.168.150.254"

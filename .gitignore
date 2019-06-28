@@ -1,0 +1,7 @@
+.DS_Store
+.vscode
+conf/**
+!conf/alertmanager.yml
+jobs/**
+rules/**
+work/**
