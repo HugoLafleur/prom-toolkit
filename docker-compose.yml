@@ -46,7 +46,9 @@ services:
     image: grafana:local
     volumes:
     - ./grafana/provisioning/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    - ./grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml
     - ./grafana/conf/grafana.ini:/etc/grafana/grafana.ini
+    - ./grafana/dashboards:/var/lib/grafana/dashboards
     ports:
     - 3000:3000
     networks:
