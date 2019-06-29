@@ -1,20 +1,18 @@
+---
 global:
   resolve_timeout: 1h
 
 route:
-  receiver: 'default-receiver'
-  group_wait: 15s
-  group_interval: 15s
-  repeat_interval: 15m
-  group_by: [status, alertname]
+  group_by: [alertname]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+  receiver: slack-meetup # default receiver for all unsorted notifications
 
 receivers:
-  - name: default-receiver
+  - name: slack-meetup
     slack_configs:
-      - api_url: https://hooks.slack.com/services/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
-        username: 'Sentinel'
-        channel: sentinel-dev
+      - api_url: https://hooks.slack.com/services/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
+        channel: meetup
         send_resolved: true
-        title: '[{{ if eq .Status "firing" }}ALERT{{ else }}{{ .Status | toUpper }}{{ end }}] {{ .CommonAnnotations.slack_title}}'
-        text: '{{ if eq .Status "firing" }}{{ .CommonAnnotations.slack_text_alert }}{{ else }}{{ .CommonAnnotations.slack_text_recovery }}{{ end }}'
-        title_link: '{{ .CommonAnnotations.slack_title_link }}'
+        text: "<!channel> {{ .CommonAnnotations.description }}"

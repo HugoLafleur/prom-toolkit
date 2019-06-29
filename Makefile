@@ -36,6 +36,7 @@ workspace: configure build
 reload: assemble-config
 	@echo "Reloading Prometheus configuration"
 	@curl -XPOST http://localhost:9090/-/reload
+	@echo "Reloading Alertmanager configuration"
 	@curl -XPOST http://localhost:9093/-/reload
 
 destroy: clean

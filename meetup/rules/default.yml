@@ -1,0 +1,20 @@
+groups:
+- name: default
+  rules:
+
+  - alert: HOST_Unreacheable_Or_Down
+    expr: up == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      description: "Monitored host cannot be reached for the last 2 minutes, and possibly is down. See '{{ $labels.instance }}' from '{{ $labels.job }}'"
+
+  - alert: HOST_CPUUtilization
+    expr: avg by (job) (sum by (cpu, job) (irate(node_cpu_seconds_total{mode!="idle"}[10s]))) >= 0.90
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      description: "CPU utilization has been over *90%* on *{{ $labels.job }}* for at least 60 seconds"
+

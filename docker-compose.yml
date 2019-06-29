@@ -13,6 +13,7 @@ services:
     - ~/.aws:/home/.aws
     command:
     - --config.file=/etc/prometheus/prometheus.yml
+    - --log.level=debug
     - --storage.tsdb.path=/prometheus
     - --storage.tsdb.retention=90d
     - --web.enable-lifecycle
@@ -30,6 +31,7 @@ services:
     - ./prometheus/conf:/etc/prometheus
     command:
     - --config.file=/etc/prometheus/alertmanager.yml
+    - --log.level=debug
     ports:
     - 9093:9093
     networks:
@@ -39,6 +41,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.grafana
+    environment:
+    - GF_LOG_LEVEL=debug
     image: grafana:local
     volumes:
     - ./grafana/provisioning/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
