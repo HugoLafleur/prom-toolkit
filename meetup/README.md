@@ -85,7 +85,27 @@ sum by (mode) (irate(node_cpu_seconds_total{mode!="idle", cpu="1"}[10s])) * 100
 ```
 
 ### Create Rule
+##### Copy rules from `rules/` to `../rules/`, then reload
+```bash
+cp ./rules/* ../rules
+cd ..
+make reload
+```
 
-### CPU Saturation Alert
+### Trigger a CPU Saturation Alert
+To create a CPU saturation condition on your host, duplicate as many `dd` commands below as there are cores on your workspace host. This test was designed for a 2-core host.
+
+```bash
+# Aim
+load () {
+  dd if=/dev/zero of=/dev/null | \
+  dd if=/dev/zero of=/dev/null; 
+}
+
+# Fire
+load
+```
+
+To stop, just break with `<Ctrl-C>`.
 
 ### Create Dashboard
