@@ -109,3 +109,11 @@ load
 To stop, just break with `<Ctrl-C>`.
 
 ### Create Dashboard
+
+If you are familiar with Grafana, you may navigate to http://localhost:3000 and create dashboards manually; alternatively, you can use the included dashboards in `./dashboards`:
+
+```bash
+cp ./dashboards/* ../grafana/dashboards
+```
+
+Grafana's [provisioning feature](https://grafana.com/docs/administration/provisioning/) will pick up on the new dashboards and load them automatically.
