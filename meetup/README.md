@@ -9,9 +9,18 @@ See [Launch](https://github.com/HugoLafleur/prom-toolkit#launch).
 ##### Download, Install, Run
 Assuming you have `wget`:
 ```bash
-wget https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
-tar xvfz node_exporter-0.18.1.linux-amd64.tar.gz && rm node_exporter-0.18.1.linux-amd64.tar.gz
-mv node_exporter-0.18.1.linux-amd64 node_exporter
+# Get latest releases
+curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest|jq -r '.assets[].browser_download_url'
+
+# Don't have "jq"? Get latest releases with good ol' grep-n-cut
+curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest|grep 'browser_download_url' | cut -d\" -f4
+
+RELEASE=0.18.1
+TARGET=linux-amd64
+
+wget https://github.com/prometheus/node_exporter/releases/download/v$RELEASE/node_exporter-$RELEASE.$TARGET.tar.gz
+tar xvfz node_exporter-$RELEASE.$TARGET.tar.gz && rm node_exporter-$RELEASE.$TARGET.tar.gz
+mv node_exporter-$RELEASE.$TARGET node_exporter
 ./node_exporter/node_exporter > ./node_exporter/node_exporter.log 2>&1 &
 ```
 
