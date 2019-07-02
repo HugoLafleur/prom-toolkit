@@ -5,10 +5,10 @@ Here are some of the things we explore during the workshop
 
 See [Launch](https://github.com/HugoLafleur/prom-toolkit#launch).
 
-### Install & Run Node Exporter (locally, on Linux)
+### Install & Run Node Exporter (locally)
 ##### Download, Install, Run
 Assuming you have `wget`:
-```bash
+```shell
 # Get latest releases
 curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest|jq -r '.assets[].browser_download_url'
 
@@ -25,20 +25,20 @@ mv node_exporter-$RELEASE.$TARGET node_exporter
 ```
 
 ##### Verify that the exporter is working
-```bash
+```shell
 curl http://localhost:9100/metrics
 ```
 
 ##### Stop Node Exporter
 
-```bash
+```shell
 pkill ".*node_exporter.*"
 ```
 
 ### Scrape Metrics
 
 ##### Copy jobs from `jobs/` to `../jobs/`, then reload
-```bash
+```shell
 cp ./jobs/* ../jobs
 cd ..
 make reload
@@ -70,7 +70,7 @@ sum by (cpu) (irate(node_cpu_seconds_total{mode!="idle"}[10s])) * 100
 ```
 
 ##### Load the host
-```bash
+```shell
 # Create load on the host
 dd if=/dev/zero of=/dev/null
 ```
@@ -95,33 +95,37 @@ sum by (mode) (irate(node_cpu_seconds_total{mode!="idle", cpu="1"}[10s])) * 100
 
 ### Create Rule
 ##### Copy rules from `rules/` to `../rules/`, then reload
-```bash
+```shell
 cp ./rules/* ../rules
 cd ..
 make reload
 ```
 
 ### Trigger a CPU Saturation Alert
-To create a CPU saturation condition on your host, duplicate as many `dd` commands below as there are cores on your workspace host. This test was designed for a 2-core host.
+To create a CPU saturation condition on your host, we're going to start `dd` commands, as many as there are cores on the host.
 
-```bash
-# Aim
+```shell
+# Saturate CPU
 load () {
-  dd if=/dev/zero of=/dev/null | \
-  dd if=/dev/zero of=/dev/null; 
+   for i in `seq 1 $(nproc)`
+   do
+      dd if=/dev/zero of=/dev/null &
+   done
 }
 
-# Fire
-load
+# Stop
+unload () {
+   killall dd
+}
 ```
 
-To stop, just break with `<Ctrl-C>`.
+Now, `load` the host, then wait for it...
 
 ### Create Dashboard
 
 If you are familiar with Grafana, you may navigate to http://localhost:3000 and create dashboards manually; alternatively, you can use the included dashboards in `./dashboards`:
 
-```bash
+```shell
 cp ./dashboards/* ../grafana/dashboards
 ```
 
