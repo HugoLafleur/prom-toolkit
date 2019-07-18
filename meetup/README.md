@@ -24,6 +24,13 @@ mv node_exporter-$RELEASE.$TARGET node_exporter
 ./node_exporter/node_exporter > ./node_exporter/node_exporter.log 2>&1 &
 ```
 
+Or, if you have Ubuntu:
+```shell
+sudo apt-get install prometheus-node-exporter
+systemctl status prometheus-node-exporter
+```
+_Note: Depending on the Ubuntu release, this will install a different release of_ `node_exporter`.
+
 ##### Verify that the exporter is working
 ```shell
 curl http://localhost:9100/metrics
