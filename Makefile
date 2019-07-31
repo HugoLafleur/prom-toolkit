@@ -20,7 +20,7 @@ assemble-config:
 		-v `pwd`/templates:/templates \
 		-v `pwd`/prometheus/conf/:/prometheus/conf/ \
 		-v `pwd`/jobs/:/jobs/ \
-		hlafleur/prom-toolkit-assemble-config	
+		hlafleur/prom-toolkit-assemble-config:0.1
 
 build: assemble-config
 
