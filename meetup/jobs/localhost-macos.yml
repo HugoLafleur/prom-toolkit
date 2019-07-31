@@ -1,3 +1,0 @@
-job_name: 'localbox'
-static_configs:
-- targets: ['host.docker.internal:9100']

@@ -6,12 +6,7 @@ GRAFANA_VERSION ?= latest
 configure:
 	@echo "Creating Virtual Environment"
 	@mkdir -p conf jobs rules
-	@ls work > /dev/null 2>&1 || \
-		( \
-			virtualenv -p python3 work; \
-			source work/bin/activate; \
-			pip install -r requirements.txt; \
-		)
+	@docker pull hlafleur/prom-toolkit-assemble-config:0.1
 
 clean:
 	@echo "Cleaning up"
@@ -21,10 +16,11 @@ clean:
 
 assemble-config:
 	@echo "Assembling Prometheus configuration file"
-	@( \
-		source work/bin/activate; \
-		./scripts/assemble_config.py; \
-	)
+	@docker run --rm -it \
+		-v `pwd`/templates:/templates \
+		-v `pwd`/prometheus/conf/:/prometheus/conf/ \
+		-v `pwd`/jobs/:/jobs/ \
+		hlafleur/prom-toolkit-assemble-config	
 
 build: assemble-config
 

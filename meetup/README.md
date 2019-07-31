@@ -44,9 +44,9 @@ pkill ".*node_exporter.*"
 
 ### Scrape Metrics
 
-##### Copy jobs from `jobs/` to `../jobs/`, then reload
+##### Copy jobs from `meetup/jobs/` to `./jobs/`, then reload
 ```shell
-cp ./jobs/* ../jobs
+cp meetup/jobs/* ./jobs
 cd ..
 make reload
 ```
