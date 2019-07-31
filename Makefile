@@ -42,5 +42,5 @@ destroy: clean
 	@echo -n "Pruning images: "; docker image prune --force
 	@echo -n "Pruning volumes: "; docker volume prune --force
 	@docker image ls --format '{{ .ID }},{{ .Repository }}:{{ .Tag }}' \
-		| egrep "prometheus:local|alertmanager:local|grafana:local" | cut -d, -f1 | uniq | xargs docker image rm --force \
+		| egrep "prometheus:local|alertmanager:local|grafana:local|hlafleur/prom-toolkit-assemble-config" | cut -d, -f1 | uniq | xargs docker image rm --force \
 		|| echo Already clean
