@@ -13,11 +13,7 @@ Also, includes the [material](https://github.com/HugoLafleur/prom-toolkit/tree/m
 ### Requirements (suggested)
 
 0. Linux (tested successfully with Ubuntu 18.04)
-1. Docker CE >= v17.x
-2. Docker Compose >= v1.21.x
-3. Virtualenv >= 15.x.x
-4. Python 3.x.x
-5. AWS CLI >= 1.10
+1. Docker CE (with docker-compose) >= v17.x
 
 _*Note for MacOS users*: Most of the commands will run on a station with Docker for Desktop, but some of the networking assumptions do not apply for MacOS (e.g. reaching the host machine from the gateway in the Docker bridge network). Added a macos-specific scraping job to address this._
 
