@@ -17,6 +17,8 @@ services:
     - --storage.tsdb.path=/prometheus
     - --storage.tsdb.retention=90d
     - --web.enable-lifecycle
+    extra_hosts:
+    - localbox:192.168.150.254
     ports:
     - 9090:9090
     networks:

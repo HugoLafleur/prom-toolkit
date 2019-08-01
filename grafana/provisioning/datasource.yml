@@ -9,7 +9,7 @@ datasources:
     user: ''
     database: ''
     basicAuth: false
-    isDefault: false
+    isDefault: true
     jsonData:
       httpMethod: GET
       keepCookies: []
