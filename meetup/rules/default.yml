@@ -11,7 +11,7 @@ groups:
       description: "Monitored host cannot be reached for the last 2 minutes, and possibly is down. See '{{ $labels.instance }}' from '{{ $labels.job }}'"
 
   - alert: HOST_CPUUtilization
-    expr: avg by (job) (sum by (cpu, job) (irate(node_cpu_seconds_total{mode!="idle"}[10s]))) >= 0.90
+    expr: avg by (job) (sum by (cpu, job) (rate(node_cpu{mode!="idle"}[30s]))) >= 0.90
     for: 1m
     labels:
       severity: critical
