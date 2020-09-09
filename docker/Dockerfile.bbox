@@ -1,0 +1,2 @@
+ARG BBOX_EXPORTER_VERSION="latest"
+FROM prom/blackbox-exporter:${BBOX_EXPORTER_VERSION}

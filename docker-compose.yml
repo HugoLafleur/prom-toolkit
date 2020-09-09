@@ -23,6 +23,18 @@ services:
     - 9090:9090
     networks:
     - toolkit
+  
+  blackbox_exporter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.bbox
+    image: blackbox_exporter:local
+    extra_hosts:
+    - localbox:192.168.150.254
+    ports:
+    - 9115:9115
+    networks:
+    - toolkit
 
   alertmanager:
     build:
