@@ -1,0 +1,2 @@
+ARG JSONEXPORTER_VERSION="latest"
+FROM quay.io/prometheuscommunity/json-exporter:${JSONEXPORTER_VERSION}

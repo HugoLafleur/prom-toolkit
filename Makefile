@@ -2,6 +2,7 @@ SHELL := /bin/bash
 PROMETHEUS_VERSION ?= latest
 ALERTMANAGER_VERSION ?= latest
 GRAFANA_VERSION ?= latest
+JSONEXPORTER_VERSION ?= latest
 
 configure:
 	@echo "Creating Virtual Environment"

@@ -9,6 +9,7 @@ services:
     volumes:
     - ./prometheus/conf:/etc/prometheus
     - ./rules:/etc/prometheus/rules
+    - ./files:/etc/prometheus/files
     - prom-data-volume:/prometheus
     - ~/.aws:/home/.aws
     command:
@@ -35,6 +36,23 @@ services:
     - 9115:9115
     networks:
     - toolkit
+
+  json_exporter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.json-exporter
+    command:
+    - --config.file=/etc/config.yml
+    - --log.level=debug
+    extra_hosts:
+    - localbox:192.168.150.254
+    image: json_exporter:local
+    ports:
+    - 7979:7979
+    networks:
+    - toolkit
+    volumes:
+    - ./json_exporter/config.yml:/etc/config.yml
 
   alertmanager:
     build:
