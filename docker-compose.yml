@@ -29,6 +29,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.bbox
+    command:
+    - --config.file=/etc/config.yml
     image: blackbox_exporter:local
     extra_hosts:
     - localbox:192.168.150.254
@@ -36,6 +38,8 @@ services:
     - 9115:9115
     networks:
     - toolkit
+    volumes:
+    - ./blackbox_exporter/config.yml:/etc/config.yml
 
   json_exporter:
     build:
